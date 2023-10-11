@@ -172,6 +172,7 @@
                                                     <?php $i = 0; ?>
                                                     {{-- @foreach ($invoice->invoicesAttachment as $attachment) --}}
                                                         <?php $i++; ?>
+                                                        @if ($invoice->invoicesAttachment)
                                                         <tr>
                                                             <td>{{ $i }}</td>
                                                             <td>{{ $invoice->invoicesAttachment->file_name }}</td>
@@ -206,6 +207,7 @@
 
                                                             </td>
                                                         </tr>
+                                                        @endif
                                                     {{-- @endforeach --}}
                                                 </tbody>
                                             </table>

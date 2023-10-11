@@ -16,6 +16,7 @@
 
         <a class="dropdown-item" href="#" data-invoice_id="{{ $item->id }}" data-toggle="modal" data-target="#Transfer_invoice"><i class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;{{ ('نقل الي الارشيف') }}</a>
 
-        <a class="dropdown-item" href="Print_invoice/{{ $item->id }}"><i class="text-success fas fa-print"></i>&nbsp;&nbsp;{{ ('طباعة الفاتورة') }}</a>
+        <a class="dropdown-item" href="invoices/printing_page/{{ $item->id }}"><i class="text-success fas fa-print"></i>&nbsp;&nbsp;{{ ('طباعة الفاتورة') }}</a>
+        <a class="dropdown-item" href="{{ route('invoices.export') }}"><i class="text-success fas fa-print"></i>&nbsp;&nbsp;{{ (' الفاتورة') }}</a>
     </div>
 </div>

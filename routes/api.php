@@ -53,6 +53,11 @@ use App\Http\Controllers\Api\UserController;
     });
     Route::resource('/users', UserController::class)->except('show');
     Route::resource('/sections', SectionController::class);
+    Route::prefix("sections")->group(function(){
+        Route::controller(SectionController::class)->group(function () {
+            Route::put('/update', 'update')->name('sections.updating');
+        });
+    });
 //     //______________________________________________________________________________________________________________________
 
 //     //-----------------------------------------------------------------------------------------------------------

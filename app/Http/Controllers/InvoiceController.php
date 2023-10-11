@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
-use App\Services\ProductService;
 use Illuminate\Http\Request;
+use App\Services\ProductService;
 use App\Http\Requests\InvoiceRequest;
+use App\Notifications\NewInvoiceAdded;
+use Illuminate\Support\Facades\Notification;
 use App\Repository\InvoiceRepositoryInterface;
 use App\Repository\SectionRepositoryInterface;
+use App\Models\User;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\InvoicesExport;
 
 class InvoiceController extends Controller
 {
@@ -40,7 +45,10 @@ class InvoiceController extends Controller
      */
     public function store(InvoiceRequest $request)
     {
-        $this->invoiceRepository->createInvoice($request->validated());
+        $invoice = $this->invoiceRepository->createInvoice($request->validated());
+        // $users = auth()->user();
+        $users = User::first();
+        Notification::send($users, new NewInvoiceAdded($invoice));
         return redirect()->route('invoices.index')->with('success', 'تم الاضافة بنجاح');
     }
 
@@ -81,5 +89,22 @@ class InvoiceController extends Controller
     {
         $this->invoiceRepository->deleteInvoice($request->invoice_id);
         return redirect()->route('invoices.index')->with('success', 'تم الحذف بنجاح');
+    }
+
+    /**
+     * Display the specified resource.
+     * @param  \App\Models\Invoice  $invoice
+     */
+    public function printingPage(Invoice $invoice)
+    {
+        return view('invoices.invoice', ['invoice' => $invoice]);
+    }
+
+    /**
+     * Export invoices files
+     */
+    public function export()
+    {
+        return Excel::download(new InvoicesExport, 'invoices.xlsx');
     }
 }

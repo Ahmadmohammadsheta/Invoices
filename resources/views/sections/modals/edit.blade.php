@@ -11,9 +11,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('sections/update') }}" method="post" autocomplete="off">
-                        {{ method_field('PUT') }}
-                        {{ csrf_field() }}
+                    <form action="{{ route('sections.updating') }}" method="post" autocomplete="off">
+                        @method('PUT')
+                        @csrf
 
                         <div class="form-group">
                             <label for="exampleInputEmail1">{{ __('اسم القسم') }}</label>

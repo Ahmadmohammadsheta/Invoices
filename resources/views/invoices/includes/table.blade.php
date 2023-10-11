@@ -1,10 +1,11 @@
 
 <div class="col-xl-12">
     <div class="card mg-b-20">
-        <div class="card-header pb-0">
-            <div class="d-flex justify-content-between">
-                <a class="btn btn-outline-primary btn-sm" href="{{ route('invoices.create') }}">{{ ('فاتورة جديدة') }}</a>
-            </div>
+        {{-- <div class="card-header pb-0 d-flex"> --}}
+            <div class="d-flex">
+                <a class="btn btn-outline-primary btn-sm m-1" href="{{ route('invoices.create') }}">{{ ('فاتورة جديدة') }}</a>
+                <a class="btn btn-outline-success btn-sm m-1" href="{{ url('invoices/export') }}">{{ ('تصدير الفاتورة') }}</a>
+            {{-- </div> --}}
         </div>
         <div class="card-body">
             <div class="table-responsive">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,7 @@ Route::get('/', function () {
 // Auth::routes(['register' => false]);
 // Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Route::middleware('auth:sanctum')->group(function () {
 
@@ -48,6 +49,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
      * sections pages routes
      */
     Route::resource('sections', SectionController::class);
+    Route::prefix("sections")->group(function(){
+        Route::controller(SectionController::class)->group(function () {
+            Route::put('/update', 'update')->name('sections.updating');
+        });
+    });
     //______________________________________________________________________________________________________________________
 
 // });
@@ -73,6 +79,12 @@ Route::prefix("products")->group(function(){
 /**
  * Invoices pages routes
  */
+Route::prefix("invoices")->group(function(){
+    Route::get('/export/', [InvoiceController::class, 'export'])->name('invoices.export');
+    Route::controller(InvoiceController::class)->group(function () {
+        Route::get('/printing_page/{invoice}', 'printingPage')->name('invoices.printingPage');
+    });
+});
 Route::resource('invoices', InvoiceController::class);
 //______________________________________________________________________________________________________________________
 

@@ -20,15 +20,27 @@ class SectionController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index(Request $request)
+    // {
+    //     $data = $this->sectionRepository->all();
+    //     // Check if the request is for an API response.
+    //     if ($request->wantsJson())
+    //     {
+    //         // Return an API response.
+    //         return $this->sendResponse($data, "", 200);
+    //     }
+    //     return view('sections.index', ['data' => $data]);
+    // }
+
+    /**
+     * Display a listing of the resource.
+     */
     public function index(Request $request)
     {
-        // Check if the request is for an API response.
-        if ($request->acceptsJson())
-        {
-            // Return an API response.
-            return $this->sendResponse($this->sectionRepository->all(), "", 200);
-        }
-        return view('sections.index', ['data' => $this->sectionRepository->all()]);
+        $data = $this->sectionRepository->all();
+
+        return $request->wantsJson() ?
+        $this->sendResponse($data, "", 200) : view('sections.index', ['data' => $data]);
     }
 
     /**
@@ -38,15 +50,9 @@ class SectionController extends Controller
     {
         $data = $this->sectionRepository->create($request->validated());
 
-        // Check if the request is for an API response.
-        if ($request->acceptsJson())
-        {
-            // Return an API response.
-            return $this->sendResponse($data, 'تم تسجيل الدخول بنجاح.', 201);
-        }
+        return $request->wantsJson() ?
+        $this->sendResponse($data, 'تم الاضافة بنجاح.', 201) : redirect()->route('sections.index')->with('success', 'تم الاضافة بنجاح');
 
-        // Otherwise, return the view.
-        return redirect()->route('sections.index')->with('success', 'تم الاضافة بنجاح');
     }
 
     /**
@@ -54,31 +60,28 @@ class SectionController extends Controller
      */
     public function show(Section $section, Request $request)
     {
-        // Check if the request is for an API response.
-        if ($request->acceptsJson())
-        {
-            // Return an API response.
-            return $this->sendResponse($this->sectionRepository->find($section->id), "", 200);
-        }
-
-        return view('sections.show', ['data' => $this->sectionRepository->find($section->id)]);
+        return $request->wantsJson() ?
+        $this->sendResponse($section, "", 200) : view('sections.show', ['data' => $section]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(SectionRequest $request)
+    public function update(SectionRequest $request, Section $section)
     {
         $data = $this->sectionRepository->edit($request->id, $request->validated());
-        return redirect()->route('sections.index')->with('success', 'تم التعديل بنجاح');
+
+        return $request->wantsJson() ?
+        $this->sendResponse($data, "تم التعديل بنجاح", 200) : redirect()->route('sections.index')->with('success', 'تم التعديل بنجاح');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(Section $section, Request $request)
     {
-        $this->sectionRepository->delete($request->id);
-        return redirect()->route('sections.index')->with('danger', 'تم الحذف بنجاح');
+        $data = $this->sectionRepository->delete($section->id);
+        return $request->wantsJson() ?
+        $this->sendResponse($data, "تم الحذف بنجاح", 200) : redirect()->route('sections.index')->with('success', 'تم الحذف بنجاح');
     }
 }
