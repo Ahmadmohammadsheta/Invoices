@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +39,7 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
-// Auth::routes(['register' => false]);
+Auth::routes(['register' => false]);
 // Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -106,6 +108,18 @@ Route::prefix("invoices_attachments")->group(function(){
         Route::get('/download/{invoicesAttachment}', 'download')->name('invoices.download');
     });
 });
+
+//______________________________________________________________________________________________________________________
+
+//-----------------------------------------------------------------------------------------------------------
+
+
+/**
+ * invoices_attachments pages routes
+ */
+// Route::middleware(['auth', 'role:admim'])->name('admins.')->prefix('admins')->group(function () {
+//     Route::resource('/roles', RoleController::class);
+// });;
 //______________________________________________________________________________________________________________________
 
 
@@ -117,6 +131,22 @@ Route::prefix("invoices_attachments")->group(function(){
 
 
 
+
+//-----------------------------------------------------------------------------------------------------------
+/**
+ * Permissions && Role routes
+ */
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Our resource routes
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('products', ProductController::class);
+});
+//______________________________________________________________________________________________________________________
 
 
 

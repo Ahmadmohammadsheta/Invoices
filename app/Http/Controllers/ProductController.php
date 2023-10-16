@@ -13,11 +13,20 @@ use Illuminate\View\View;
 class ProductController extends Controller
 {
     private $productRepository;
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function __construct(ProductRepositoryInterface $productRepository, SectionRepositoryInterface $sectionRepository, UnitRepositoryInterface $unitRepository)
     {
         $this->productRepository = $productRepository;
         $this->sectionRepository = $sectionRepository;
         $this->unitRepository = $unitRepository;
+        // $this->middleware(['permission:product-list|product-create|product-edit|product-delete'], ['only' => ['index', 'show']]);
+        // $this->middleware(['permission:product-create'], ['only' => ['create', 'store']]);
+        // $this->middleware(['permission:product-edit'], ['only' => ['edit', 'update']]);
+        // $this->middleware(['permission:product-delete'], ['only' => ['destroy']]);
     }
 
     /**

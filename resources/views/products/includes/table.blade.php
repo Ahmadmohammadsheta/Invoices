@@ -4,10 +4,10 @@
         <div class="card-header pb-0">
             {{-- <div class="d-flex justify-content-between"> --}}
                 <div class="col-sm-6 col-md-4 col-xl-3 mg-t-20 mg-xl-t-0">
-                {{-- @can('اضافة منتج') --}}
+                @can('role-create')
                     <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
                         data-toggle="modal" href="#exampleModal">{{ __('اضافة منتج') }}</a>
-                {{-- @endcan --}}
+                @endcan
             </div>
         </div>
         <div class="card-body">

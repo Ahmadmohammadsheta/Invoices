@@ -46,6 +46,7 @@ class BaseRepository implements EloquentRepositoryInterface
      */
     public function create(array $attributes): Model
     {
+        $attributes['created_by'] = auth()->id();
         return $this->model->create($attributes);
     }
 

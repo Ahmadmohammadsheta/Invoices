@@ -15,7 +15,21 @@ class Product extends Model
      *
      * @var array<int, string>
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'en_name',
+        'code',
+        'barecode',
+        'unit_id',
+        'total_units',
+        'price',
+        'selling_discount',
+        'buying_discount',
+        'tax',
+        'description',
+        'section_id',
+        'created_by',
+    ];
 
     /**
      * The attributes that make section relationship
