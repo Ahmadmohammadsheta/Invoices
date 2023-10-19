@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ChartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +96,13 @@ Route::resource('invoices', InvoiceController::class);
  * invoices_details pages routes
  */
 Route::resource('invoices_details', InvoicesDetailController::class);
+//______________________________________________________________________________________________________________________
+
+//-----------------------------------------------------------------------------------------------------------
+/**
+ * charts pages routes
+ */
+Route::resource('charts', ChartController::class);
 //______________________________________________________________________________________________________________________
 
 
