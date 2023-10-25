@@ -28,9 +28,9 @@ class HomeController extends Controller
     public function index()
     {
         $chart_products = [
-            'chart_title' => 'Products by days',
+            'chart_title' => 'Products by daily stocks',
             'report_type' => 'group_by_date',
-            'model' => 'App\Models\Product',
+            'model' => 'App\Models\Stock',
             'group_by_field' => 'created_at',
             'group_by_string ' => 'code',
             'group_by_period' => 'day',

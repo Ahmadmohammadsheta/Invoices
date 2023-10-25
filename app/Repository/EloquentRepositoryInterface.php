@@ -67,5 +67,7 @@ interface EloquentRepositoryInterface
      */
     public function forAllConditions(array $attributes);
 
+    public function forAllConditionsFinally(array $attributes);
+
     public function forAllConditionsReturn(array $attributes, $resourceCollection);
 }

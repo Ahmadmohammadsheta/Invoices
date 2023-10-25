@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Trader;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use App\Exports\InvoicesExport;
 use App\Services\ProductService;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\InvoiceRequest;
+use App\Models\Customer;
 use App\Notifications\NewInvoiceAdded;
 use Illuminate\Support\Facades\Notification;
 use App\Repository\InvoiceRepositoryInterface;
 use App\Repository\SectionRepositoryInterface;
-use App\Models\User;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\InvoicesExport;
 
 class InvoiceController extends Controller
 {
@@ -34,9 +36,44 @@ class InvoiceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(ProductService $productService)
+    public function create($request, ProductService $productService)
     {
-        return view('invoices.create', ['sections' => $this->sectionRepository->all(), 'products'=> $productService->allProducts()]);
+        $type = $request->type;
+        return view('invoices.create', [
+            'sections' => $this->sectionRepository->all(),
+            'products'=> $productService->allProducts(),
+            'traders' => Customer::where(['type' => 2])->get(),
+            'customers'=> Customer::where(['type' => 1])->get(),
+            'type'=>$type
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function buy(ProductService $productService)
+    {
+        return view('invoices.create', [
+            'sections' => $this->sectionRepository->all(),
+            'products'=> $productService->allProducts(),
+            'traders' => Customer::where(['type' => 2])->get(),
+            'customers'=> Customer::where(['type' => 1])->get(),
+            'type'=>'buy'
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function sale(ProductService $productService)
+    {
+        return view('invoices.create', [
+            'sections' => $this->sectionRepository->all(),
+            'products'=> $productService->allProducts(),
+            'traders' => Customer::where(['type' => 2])->get(),
+            'customers'=> Customer::where(['type' => 1])->get(),
+            'type'=>'sale'
+        ]);
     }
 
     /**

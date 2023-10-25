@@ -62,4 +62,12 @@ class TraderController extends Controller
     {
         //
     }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function getTraders(Trader $trader)
+    {
+        //
+    }
 }
