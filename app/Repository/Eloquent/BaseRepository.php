@@ -284,6 +284,19 @@ class BaseRepository implements EloquentRepositoryInterface
     /**
      * Method for all data conditions functional
      */
+    public function forAllConditionsFinally(array $attributes)
+    {
+        return $this->model
+            ->where($this->whereColumnName($attributes))
+            ->where($this->whereBooleanName($attributes))
+            ->where($this->whereBelongsToId($attributes))
+            ->get()
+            ;
+    }
+
+    /**
+     * Method for all data conditions functional
+     */
     public function forAllConditions(array $attributes)
     {
         return $this->model
