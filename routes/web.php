@@ -33,14 +33,11 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
-    return redirect()->route('home');
-});
+
 
 Auth::routes(['register' => false]);
 // Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 //-----------------------------------------------------------------------------------------------------------
@@ -48,18 +45,21 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
  * Permissions && Role routes
  */
 Route::middleware('auth')->group(function () {
-//-----------------------------------------------------------------------------------------------------------
+    Route::get('/', function () {
+        return redirect()->route('home');
+    });
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-
+    //-----------------------------------------------------------------------------------------------------------
     /**
      * sections pages routes
      */
-    Route::resource('sections', SectionController::class);
     Route::prefix("sections")->group(function(){
         Route::controller(SectionController::class)->group(function () {
             Route::put('/update', 'update')->name('sections.updating');
         });
     });
+    Route::resource('sections', SectionController::class);
     //______________________________________________________________________________________________________________________
 
 
@@ -67,14 +67,13 @@ Route::middleware('auth')->group(function () {
     /**
      * products pages routes
      */
-    Route::resource('products', ProductController::class);
-
     Route::prefix("products")->group(function(){
         Route::controller(ProductController::class)->group(function () {
             Route::get('/get_product/{id}', 'getProduct')->name('products.getProduct');
             Route::get('/get_products/{id}', 'getProducts')->name('products.getProducts');
         });
     });
+    Route::resource('products', ProductController::class);
     //______________________________________________________________________________________________________________________
 
 
@@ -84,8 +83,8 @@ Route::middleware('auth')->group(function () {
      * Invoices pages routes
      */
     Route::prefix("invoices")->group(function(){
-        Route::get('/export/', [InvoiceController::class, 'export'])->name('invoices.export');
         Route::controller(InvoiceController::class)->group(function () {
+            Route::get('/export/', 'export')->name('invoices.export');
             Route::get('/printing_page/{invoice}', 'printingPage')->name('invoices.printingPage');
             Route::get('/buy', 'buy')->name('invoices.buy');
             Route::get('/sale', 'sale')->name('invoices.sale');
@@ -105,12 +104,12 @@ Route::middleware('auth')->group(function () {
     /**
      * invoices_attachments pages routes
      */
-    Route::resource('invoices_attachments', InvoicesAttachmentController::class);
     Route::prefix("invoices_attachments")->group(function(){
         Route::controller(InvoicesAttachmentController::class)->group(function () {
             Route::get('/download/{invoicesAttachment}', 'download')->name('invoices.download');
         });
     });
+    Route::resource('invoices_attachments', InvoicesAttachmentController::class);
 
     //______________________________________________________________________________________________________________________
 
@@ -141,7 +140,6 @@ Route::middleware('auth')->group(function () {
      * users pages routes
      */
     Route::resource('users', UserController::class);
-    });
     //______________________________________________________________________________________________________________________
 
     //-----------------------------------------------------------------------------------------------------------
@@ -191,7 +189,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-//______________________________________________________________________________________________________________________
+    //______________________________________________________________________________________________________________________
 
     /**
      * invoices_attachments pages routes
@@ -200,8 +198,4 @@ Route::middleware('auth')->group(function () {
     //     Route::resource('/roles', RoleController::class);
     // });;
     //______________________________________________________________________________________________________________________
-
-
-
-
-
+});

@@ -20,6 +20,10 @@ class CustomerRequest extends FormRequest
             'phone1' => 'required|unique:customers,phone1|regex:/^(01)[0-9]{9}$/' . ($this->id ? ",$this->id" : ''),
             'email' => 'nullable| unique:customers',
             'type' => 'required',
+            'phone3' => 'nullable',
+            'phone2' => 'nullable',
+            'national_id_image' => 'nullable',
+            'approved' => 'nullable',
         ];
     }
 
@@ -29,29 +33,21 @@ class CustomerRequest extends FormRequest
     private function updateRequest()
     {
         return [
-            'name' => 'required| unique:customers,name,'.$this->id,  //AMA.true
-            'national_id' => 'nullable|unique:customers,national_id|regex:/^[0-9]{14}$/,'.$this->id,
-            'email' => 'required| unique:customers,email,'.$this->id,  //AMA.true
+            // 'name' => 'required| unique:customers,name,'.$this->id,  //AMA.true
+            'name' => ['required', Rule::unique('customers', 'name')->ignore($this->id)], //AMA>true
+            'national_id' => ['required', Rule::unique('customers', 'national_id')->ignore($this->id)], //AMA>true
+            'email' => ['required', Rule::unique('customers', 'email')->ignore($this->id)], //AMA>true
             'phone1' => [
                 'required', 'regex:/^(01)[0-9]{9}$/',
-                Rule::unique('customers', 'phone1')->ignore($this->trader)
+                Rule::unique('customers', 'phone1')->ignore($this->id)
             ],
             'age' => 'required|date|before_or_equal:'.\Carbon\Carbon::now()->subYears(18)->format('Y-m-d'),
             'type' => 'required',
+            'phone3' => 'nullable',
+            'phone2' => 'nullable',
+            'national_id_image' => 'nullable',
+            'approved' => 'nullable',
         ];
-    }
-
-    public function checkAge()
-    {
-        $birthdate = $this->input('age');
-        $userCarbon = Carbon::parse($birthdate);
-        $userAge = $userCarbon->diffInYears(Carbon::now());
-
-        if ($userAge >= 18) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**
@@ -85,6 +81,7 @@ class CustomerRequest extends FormRequest
             'national_id.unique' => 'National id already_exists',
             'email.unique' => 'Email already_exists',
             'phone1.unique' => 'Phone already_exists',
+            'national_id_image.required' => 'national_id_image required',
         ];
     }
 }

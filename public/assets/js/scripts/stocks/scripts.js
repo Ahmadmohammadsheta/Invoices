@@ -6,49 +6,84 @@ $(document).ready(function() {
         }
     });
 
-    // Adding a customer
     //--------------------------------------------------------------------
     //--------------------------------------------------------------------
     //--------------------------------------------------------------------
-    // Ajax request to insert cutomer form data
-    // var form = $('#'); //valid form selector
-    $("#add_form").submit(function(e) {
+    // Adding a stocks
+    $(".add_item_btn").click(function (e) {
         e.preventDefault();
 
-        // var data = new FormData();
-        // $.each($(':input', form ), function(i, fileds){
-        //     data.append($(fileds).attr('name'), $(fileds).val());
-        // });
-        // console.log(data);
-        // $.each($('input[type=file]', form)[0].files, function (i, file) {
-        //     data.append(file.name, file);
-        // });
-        // console.log(data);
+        $("#show_item").append(`
+            <div class="row append_item">
 
+                <div class="col-md-2 mb-3">
+                    <select id="product_id" name="product_id[]" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
+                        @foreach ($products as $product)
+                        <option  style="font-size: 1.2rem">{{ $product->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-1 mb-3">
+                    <input type="text" name="quantity[]" id="" class="form-control" placeholder="Quantity" required>
+                </div>
+
+                <div class="col-md-1 mb-3">
+                    <input type="text" name="price[]" id="" class="form-control" placeholder="Price" required>
+                </div>
+
+                <div class="col-md-2 mb-3">
+                    <input type="text" name="buying_price[]" id="" class="form-control" placeholder="Buying price" required>
+                </div>
+
+                <div class="col-md-1 mb-3">
+                    <input type="text" name="color_id[]" id="" class="form-control" placeholder="Color" required>
+                </div>
+
+                <div class="col-md-1 mb-3">
+                    <input type="text" name="size_id[]" id="" class="form-control" placeholder="Size" required>
+                </div>
+
+                <div class="col-md-2 mb-3">
+                    <input type="text" name="description[]" id="" class="form-control" placeholder="Description" required>
+                </div>
+
+                <div class="col-md-1 mb-3 d-grid">
+                    <button class="btn btn-danger remove_item_btn">X</button>
+                </div>
+            </div>
+        `);
+    });
+
+    $(document).on('click', '.remove_item_btn', function(e) {
+        e.preventDefault();
+        let row_item = $(this).parent().parent();
+        $(row_item).remove();
+    });
+
+
+    // product details when changed
+    // Adding a stocks
+    $("")
+
+    // Ajax request to insert multiple form data
+    $("#add_form").submit(function(e) {
+        e.preventDefault();
         $("#add_btn").val('Adding......');
-
         $.ajax({
-            url: "/customers",
+            url: "/stocks",
             type:"POST",
+            // method: 'post',
             data: $(this).serialize(),
             success: function(response) {
                 $("#add_btn").val('Add');
                 $("#add_form")[0].reset();
+                $(".append_item").remove();
                 $(".table_div").load(location.href+ ' .table_div');
                 $("#show_alert").html(`
-                    <div class="alert alert-success text-center" style="font-size: 18px;" role="alert">${ response.message }</div>
+                    <div class="alert alert-success role="alert">${ response }</div>
                 `);
-                $("#modaldemo8_create").modal('hide');
-            },
-            error: function(error) {
-                var requestErrors = error.responseJSON.errors;
-                var str = `<ul>`;
-                    for(var err in requestErrors) {
-                        $(".error-text").html(str);
-                        str += '<li>' + requestErrors[err][0] + '</li>';
-                    }
-                    str += '</ul>';
-                $(".errors_div").html(str);
+                $("#modaldemo8").modal('hide');
             }
         });
     });
@@ -57,7 +92,7 @@ $(document).ready(function() {
     //____________________________________________________________________
 
 
-    // Showing a customer
+    // Showing a stocks
     //--------------------------------------------------------------------
     //--------------------------------------------------------------------
     //--------------------------------------------------------------------
@@ -68,22 +103,22 @@ $(document).ready(function() {
         $('#show_form_check_edit').empty()
 
         var button = $(event.relatedTarget)
-        var customer = button.data('customer')
-        var id = customer.id
-        var name = customer.name
-        var national_id = customer.national_id
-        var phone1 = customer.phone1
-        var email = customer.email
-        var age = customer.age
-        var type = customer.type
-        var national_id_image = customer.national_id_image
-        var approved = customer.approved
-        var created_by = customer.created_by
-        var updated_by = customer.updated_by
-        var phone2 = customer.phone2
-        var phone3 = customer.phone3
+        var stocks = button.data('stocks')
+        var id = stocks.id
+        var name = stocks.name
+        var national_id = stocks.national_id
+        var phone1 = stocks.phone1
+        var email = stocks.email
+        var age = stocks.age
+        var type = stocks.type
+        var national_id_image = stocks.national_id_image
+        var approved = stocks.approved
+        var created_by = stocks.created_by
+        var updated_by = stocks.updated_by
+        var phone2 = stocks.phone2
+        var phone3 = stocks.phone3
         var modal = $(this)
-        modal.find('.modal-body #customer').val(customer);
+        modal.find('.modal-body #stocks').val(stocks);
         modal.find('.modal-body #id').val(id);
         modal.find('.modal-body #name').val(name);
         modal.find('.modal-body #national_id').val(national_id);
@@ -124,7 +159,7 @@ $(document).ready(function() {
         $("#show_btn_edit").val('Updating......');
         console.log(id);
         $.ajax({
-            url: "/customers/updating/"+ id,
+            url: "/stocks/updating/"+ id,
             type:"PUT",
             data: $(this).serialize(),
             success: function(response) {
@@ -154,7 +189,7 @@ $(document).ready(function() {
     //____________________________________________________________________
 
 
-    // Editing a customer
+    // Editing a stocks
     //--------------------------------------------------------------------
     //--------------------------------------------------------------------
     //--------------------------------------------------------------------
@@ -164,22 +199,22 @@ $(document).ready(function() {
         $('#form_check_edit').empty()
 
         var button = $(event.relatedTarget)
-        var customer = button.data('customer')
-        var id = customer.id
-        var name = customer.name
-        var national_id = customer.national_id
-        var phone1 = customer.phone1
-        var email = customer.email
-        var age = customer.age
-        var type = customer.type
-        var national_id_image = customer.national_id_image
-        var approved = customer.approved
-        var created_by = customer.created_by
-        var updated_by = customer.updated_by
-        var phone2 = customer.phone2
-        var phone3 = customer.phone3
+        var stocks = button.data('stocks')
+        var id = stocks.id
+        var name = stocks.name
+        var national_id = stocks.national_id
+        var phone1 = stocks.phone1
+        var email = stocks.email
+        var age = stocks.age
+        var type = stocks.type
+        var national_id_image = stocks.national_id_image
+        var approved = stocks.approved
+        var created_by = stocks.created_by
+        var updated_by = stocks.updated_by
+        var phone2 = stocks.phone2
+        var phone3 = stocks.phone3
         var modal = $(this)
-        modal.find('.modal-body #customer').val(customer);
+        modal.find('.modal-body #stocks').val(stocks);
         modal.find('.modal-body #id').val(id);
         modal.find('.modal-body #name').val(name);
         modal.find('.modal-body #national_id').val(national_id);
@@ -193,7 +228,7 @@ $(document).ready(function() {
         modal.find('.modal-body #phone3').val(phone3);
         modal.find('.modal-body #updated_by').val(updated_by);
         modal.find('.modal-body #created_by').val(created_by);
-        console.log(type, email, customer, national_id_image);
+        console.log(type, email, stocks, national_id_image);
         $(".edit_type").append(`
             <option value="1" ${(type == 1 ? "selected" : "")} style="font-size: 1..2rem"> مورد </option>
             <option value="2" ${(type == 2 ? "selected" : "")} style="font-size: 1.2rem">عميل </option>
@@ -220,7 +255,7 @@ $(document).ready(function() {
 
             console.log(id);
             $.ajax({
-                url: "/customers/updating/"+ id,
+                url: "/stocks/updating/"+ id,
                 type:"PUT",
                 data: $(this).serialize(),
                 success: function(response) {
@@ -269,7 +304,7 @@ $(document).ready(function() {
             $("#delete_btn").val('Deleteing......');
 
             $.ajax({
-                url: "/customers/deleting/"+ id,
+                url: "/stocks/deleting/"+ id,
                 type:"DELETE",
                 success: function(response) {
                     $("#delete_btn").val('deleted');
@@ -293,8 +328,9 @@ $(document).ready(function() {
             });
         });
     });
+//____________________________________________________________________
+//____________________________________________________________________
+//____________________________________________________________________
 
 });
-//____________________________________________________________________
-//____________________________________________________________________
-//____________________________________________________________________
+

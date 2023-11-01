@@ -29,7 +29,10 @@ return new class extends Migration
             $table->bigInteger('over_price')->nullable();
             $table->bigInteger('min_quantity')->nullable();
             $table->text('description')->nullable();
-            $table->string('Created_by', 999);
+            $table->bigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('updated_by');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

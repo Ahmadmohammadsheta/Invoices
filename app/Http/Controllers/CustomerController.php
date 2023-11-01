@@ -73,22 +73,10 @@ class CustomerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(CustomerRequest $request)
     {
-        // Check the user's age.
-        // if (!$request->checkAge()) {
-        //     return redirect()->back()->withErrors('You must be at least 18 years old to register.');
-        // }
         $data = $this->customerRepository->create($request->validated());
         return $this->sendResponse("", "تم اضافة ". $data->name." بنجاح", 200);
 
@@ -106,14 +94,6 @@ class CustomerController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Customer $customer)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Customer $customer)
@@ -121,7 +101,7 @@ class CustomerController extends Controller
         $data = $this->customerRepository->edit($customer->id, $request->validated());
 
         return $request->wantsJson() ?
-        $this->sendResponse("",  "تم تعديل ". $data->name." بنجاح", 200) : redirect()->route('subProducts.index')->with('success', 'تم التعديل بنجاح');
+        $this->sendResponse("",  "تم تعديل ". $data->name." بنجاح", 200) : redirect()->route('customers.index')->with('success', 'تم التعديل بنجاح');
     }
 
     /**
@@ -133,7 +113,7 @@ class CustomerController extends Controller
         return $this->sendResponse($data, "تم تعديل ". $data->name." بنجاح", 200);
 
         return $request->wantsJson() ?
-        $this->sendResponse($data, "تم التعديل بنجاح", 200) : redirect()->route('subProducts.index')->with('success', 'تم التعديل بنجاح');
+        $this->sendResponse($data, "تم التعديل بنجاح", 200) : redirect()->route('customers.index')->with('success', 'تم التعديل بنجاح');
     }
 
     /**
@@ -143,7 +123,7 @@ class CustomerController extends Controller
     {
         $data = $this->customerRepository->delete($customer->id);
         return $request->wantsJson() ?
-        $this->sendResponse($data, "تم الحذف بنجاح", 200) : redirect()->route('subProducts.index')->with('success', 'تم الحذف بنجاح');
+        $this->sendResponse($data, "تم الحذف بنجاح", 200) : redirect()->route('customers.index')->with('success', 'تم الحذف بنجاح');
     }
 
     /**
