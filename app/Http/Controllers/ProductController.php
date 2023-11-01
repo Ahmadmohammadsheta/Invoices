@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
+use App\Http\Resources\Products\ProductResource;
 use App\Repository\UnitRepositoryInterface;
 use App\Repository\ProductRepositoryInterface;
 use App\Repository\SectionRepositoryInterface;
 use Illuminate\View\View;
+use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 class ProductController extends Controller
 {
+    use TraitResponseTrait;
     private $productRepository;
     /**
      * Display a listing of the resource.
@@ -61,8 +64,11 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($id)
     {
+        $data = $this->productRepository->find($id);
+        // dd(new ProductResource($data));
+        return $this->sendResponse(new ProductResource($data), "", 200);
     }
 
     /**

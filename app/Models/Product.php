@@ -28,6 +28,7 @@ class Product extends Model
         'description',
         'section_id',
         'created_by',
+        'updated_by',
     ];
 
     /**
@@ -46,6 +47,22 @@ class Product extends Model
         return $this->belongsTo(Unit::class, 'unit_id', 'id');
     }
 
+    /**
+     * The attributes that make Created by relationship
+     */
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    /**
+     * The attributes that make Created by relationship
+     */
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
+
     //------------------------------------------------------------------
     // Attributes Sectiuon related
     /**
@@ -53,11 +70,11 @@ class Product extends Model
     *
     * @return Attribute
     */
-    protected function createdBy(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => auth()->id(),
-            get: fn ($value) => User::find($value)->name,
-        );
-    }
+    // protected function createdBy(): Attribute
+    // {
+    //     return Attribute::make(
+    //         set: fn ($value) => auth()->id(),
+    //         get: fn ($value) => User::find(1)->name,
+    //     );
+    // }
 }
