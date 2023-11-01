@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Http\Requests\SectionRequest;
+use App\Http\Resources\Sections\SectionResource;
 use App\Repository\SectionRepositoryInterface;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
@@ -40,7 +41,7 @@ class SectionController extends Controller
         $data = $this->sectionRepository->all();
 
         return $request->wantsJson() ?
-        $this->sendResponse($data, "", 200) : view('sections.index', ['data' => $data]);
+        $this->sendResponse(SectionResource::collection($data), "", 200) : view('sections.index', ['data' => $data]);
     }
 
     /**
