@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Products;
 
+use App\Http\Resources\Colors\ColorResource;
+use App\Http\Resources\Sizes\SizeResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

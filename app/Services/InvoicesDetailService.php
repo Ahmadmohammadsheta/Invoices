@@ -9,11 +9,11 @@ class InvoicesDetailService
      */
     public function createInvoicesDetailByRelation(array $data, $invoice)
     {
-        $data['section'] = $invoice->section->name;
+        // $data['section'] = $invoice->section->name;
         $data['product'] = $invoice->product->name;
         $data['status'] = $invoice->status;
         $data['value_status'] = $invoice->value_status;
-        $data['user'] = auth()->user()->name;
+        $data['created_by'] = auth()->user()->name;
 
         $invoice->invoicesDetail()->create($data);
 
@@ -26,11 +26,11 @@ class InvoicesDetailService
     public function updateInvoicesDetailByRelation(array $data, $invoice)
     {
         $data = [
-            'section' => $invoice->section->name,
+            // 'section' => $invoice->section->name,
             'product' => $invoice->product->name,
             'status' => $invoice->status,
             'value_status' => $invoice->value_status,
-            'user' => $invoice->invoicesDetail->user,
+            // 'user' => $invoice->invoicesDetail->user,
         ];
 
         $invoice->invoicesDetail()->update($data);

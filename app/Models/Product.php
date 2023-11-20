@@ -20,6 +20,7 @@ class Product extends Model
         'en_name',
         'code',
         'barecode',
+        'unit_id',
         'total_units',
         'price',
         'selling_discount',

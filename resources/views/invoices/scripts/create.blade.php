@@ -98,6 +98,7 @@
 // AMA.
     function myFunction() {
 
+        var amount_collection = parseFloat(document.getElementById("amount_collection").value);
         var amount_commission = parseFloat(document.getElementById("amount_commission").value);
         var discount = parseFloat(document.getElementById("discount").value);
         var rate_vat = parseFloat(document.getElementById("rate_vat").value);
@@ -121,7 +122,7 @@
 
             document.getElementById("value_vat").value = sumq;
 
-            document.getElementById("total").value = sumt;
+            document.getElementById("total").value = amount_collection - amount_commission + discount;
 
         }
 

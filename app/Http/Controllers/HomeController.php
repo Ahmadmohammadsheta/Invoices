@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Invoice;
 use App\Models\Product;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
@@ -60,7 +61,7 @@ class HomeController extends Controller
         ];
         $chart3 = new LaravelChart($chart_traders);
 
-        $productToday = Product::whereDate('created_at', Carbon::today())->get();
+        $productToday = Stock::whereDate('created_at', Carbon::today())->get();
         $invoices = Invoice::all();
         $today = Invoice::whereDate('created_at', Carbon::today())->first();
         $yesterday = Invoice::whereDate('created_at', Carbon::yesterday())->get();

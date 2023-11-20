@@ -77,6 +77,17 @@ class SectionController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     */
+    public function updating(SectionRequest $request, Section $section)
+    {
+        $data = $this->sectionRepository->edit($request->id, $request->validated());
+
+        return $request->wantsJson() ?
+        $this->sendResponse($data, "تم التعديل بنجاح", 200) : redirect()->route('sections.index')->with('success', 'تم التعديل بنجاح');
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Section $section, Request $request)

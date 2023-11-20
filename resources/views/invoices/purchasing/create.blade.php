@@ -29,11 +29,12 @@
                 <div class="card-body">
                     <form action="{{ route('invoices.store') }}" method="post" enctype="multipart/form-data"
                         autocomplete="off">
-                        {{ csrf_field() }}
+                        @csrf
                         {{-- 1 --}}
 
                         <div class="row">
                             <div class="col">
+                                <input type="hidden" name="invoice_type" value="1">
                                 <label for="inputName" class="control-label">{{ __('رقم الفاتورة') }}</label>
                                 <input type="text" class="form-control" id="inputName" name="invoice_number"
                                     title="يرجي ادخال رقم الفاتورة" required>

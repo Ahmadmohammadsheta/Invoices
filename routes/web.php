@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UnitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,8 +36,8 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Auth::routes(['register' => false]);
-// Auth::routes();
+// Auth::routes(['register' => false]);
+Auth::routes();
 
 
 
@@ -56,7 +57,7 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix("sections")->group(function(){
         Route::controller(SectionController::class)->group(function () {
-            Route::put('/update', 'update')->name('sections.updating');
+            Route::put('/updating', 'updating')->name('sections.updating');
         });
     });
     Route::resource('sections', SectionController::class);
@@ -71,6 +72,7 @@ Route::middleware('auth')->group(function () {
         Route::controller(ProductController::class)->group(function () {
             Route::get('/get_product/{id}', 'getProduct')->name('products.getProduct');
             Route::get('/get_products/{id}', 'getProducts')->name('products.getProducts');
+            Route::get('/all_products', 'allProducts')->name('products.all_products');
         });
     });
     Route::resource('products', ProductController::class);
@@ -111,6 +113,27 @@ Route::middleware('auth')->group(function () {
     });
     Route::resource('invoices_attachments', InvoicesAttachmentController::class);
 
+    //______________________________________________________________________________________________________________________
+
+    //-----------------------------------------------------------------------------------------------------------
+    /**
+     * charts pages routes
+     */
+    Route::resource('units', UnitController::class);
+    //______________________________________________________________________________________________________________________
+
+    //-----------------------------------------------------------------------------------------------------------
+    /**
+     * charts pages routes
+     */
+    Route::resource('colors', ColorController::class);
+    //______________________________________________________________________________________________________________________
+
+    //-----------------------------------------------------------------------------------------------------------
+    /**
+     * charts pages routes
+     */
+    Route::resource('sizes', SizeController::class);
     //______________________________________________________________________________________________________________________
 
     //-----------------------------------------------------------------------------------------------------------

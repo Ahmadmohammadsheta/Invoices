@@ -1,4 +1,31 @@
-<script>
+$(document).ready(function() {
+    $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // Adding a product
+    $('#exampleModal').on('show.bs.modal', function(event) {
+        console.log('loading');
+        $.ajax({
+            url: "/units",
+            type:"GET",
+            dataType: "json",
+            success: function(response) {
+                console.log(response.data);
+                var select = $('#unit_id');
+                $.each(response.data, function(index, unit) {
+                    select.append($('<option>').val(unit.id).text(unit.name));
+                });
+            },
+            error: function(error) {
+
+            }
+        });
+    })
+
+
     // Editing a product
     $('#edit_product').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget)
@@ -21,7 +48,7 @@
         modal.find('.modal-body #price').val(price);
         modal.find('.modal-body #unit_name').val(unit_name);
         modal.find('.modal-body #total_units').val(total_units);
-        modal.find('.modal-body #section_id').val(section_id);
+        // modal.find('.modal-body #section_id').val(section_id);
         modal.find('.modal-body #description').val(description);
     })
 
@@ -34,24 +61,5 @@
 
         modal.find('.modal-body #id').val(id);
         modal.find('.modal-body #name').val(name);
-    })
-
-    // index table
-    // $('#addForm').on('submit', function () {
-    //     e.preventDefault();
-
-    //     $.ajax({
-    //         type:"POST",
-    //         url: "sections.store",
-    //         data: $('#addForm').serialize(),
-    //         success: function (response) {
-    //             console.log(response);
-    //             $('#modaldemo8').modal('hide');
-    //             alert("Success");
-    //         },
-    //         error: function (error) {
-    //             console.log(error);
-    //         };
-    //     })
-    // }
-</script>
+    });
+});

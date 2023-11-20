@@ -45,19 +45,19 @@ use App\Http\Controllers\Api\UserController;
  */
 // Route::middleware('auth:sanctum')->group(function () {
 //     //-----------------------------------------------------------------------------------------------------------
-    Route::prefix("users")->group(function(){
-        Route::controller(UserController::class)->group(function () {
-            Route::post('/register', 'register')->name('users.register');
-            Route::post('/login', 'login')->name('users.login');
-        });
-    });
-    Route::resource('/users', UserController::class)->except('show');
-    Route::resource('/sections', SectionController::class);
-    Route::prefix("sections")->group(function(){
-        Route::controller(SectionController::class)->group(function () {
-            Route::put('/update', 'update')->name('sections.updating');
-        });
-    });
+    // Route::prefix("users")->group(function(){
+    //     Route::controller(UserController::class)->group(function () {
+    //         Route::post('/register', 'register')->name('users.register');
+    //         Route::post('/login', 'login')->name('users.login');
+    //     });
+    // });
+    // Route::resource('/users', UserController::class)->except('show');
+    // Route::resource('/sections', SectionController::class);
+    // Route::prefix("sections")->group(function(){
+    //     Route::controller(SectionController::class)->group(function () {
+    //         Route::put('/update', 'update')->name('sections.updating');
+    //     });
+    // });
 //     //______________________________________________________________________________________________________________________
 
 //     //-----------------------------------------------------------------------------------------------------------

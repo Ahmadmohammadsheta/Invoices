@@ -1,17 +1,14 @@
 @extends('layouts.master')
 @section('css')
+
 @endsection
+
+
 @section('page-header')
-				<!-- breadcrumb -->
-				<div class="breadcrumb-header justify-content-between">
-					<div class="my-auto">
-						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">Pages</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ Empty</span>
-						</div>
-					</div>
-				</div>
-				<!-- breadcrumb -->
+    {{ __('traders') }}
 @endsection
+
+
 @section('content')
     <!-- row -->
     <div class="row">
@@ -21,7 +18,8 @@
                     <div class="d-flex justify-content-between">
                         <div class="col-sm-6 col-md-4 col-xl-3 mg-t-20 mg-xl-t-0">
                             @can('role-create')
-                            <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-newspaper" data-toggle="modal" href="#modaldemo8">{{ __('اضافة مخزون') }}</a>
+                            {{-- <a class="modal-effect btn btn-outline-primary btn-block" href="{{ route('stocks.create') }}">{{ __('اضافة رصيد') }}</a> --}}
+                            <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-newspaper" data-toggle="modal" href="#modaldemo8_create">{{ __('اضافة رصيد') }}</a>
                             @endcan
                         </div>
                     </div>
@@ -50,13 +48,14 @@
                                     <td class="border-bottom-0 text-center">{{ $item->quantity }}</td>
                                     <td class="border-bottom-0 text-center">{{ $item->price }}</td>
                                     <td class="border-bottom-0 text-center">{{ $item->buying_price }}</td>
-                                    <td class="border-bottom-0 text-center">{{ $item->color_id }}</td>
-                                    <td class="border-bottom-0 text-center">{{ $item->size_id }}</td>
+                                    <td class="border-bottom-0 text-center">{{ $item->color->name }}</td>
+                                    <td class="border-bottom-0 text-center">{{ $item->size->name }}</td>
+
                                     <td style="width: 150px">
                                         @can('role-list')
                                         <!-- Edit Customer button -->
                                         <a class="modal-effect btn btn-sm btn-primary" data-effect="effect-newspaper" data-toggle="modal" type="button"
-                                            data-customer="{{ $item }}"
+                                            data-stock="{{ $item }}"
                                             href="#modaldemo8_show" title="عرض">
                                             {{-- <i class="las la-pen"></i> --}}
                                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="12" height="15" viewBox="0 0 512 512">
@@ -67,7 +66,7 @@
                                         @can('role-edit')
                                         <!-- Edit Customer button -->
                                         <a class="modal-effect btn btn-sm btn-info" data-effect="effect-newspaper" data-toggle="modal" type="button"
-                                            data-customer="{{ $item }}"
+                                            data-stock="{{ $item }}"
                                             href="#modaldemo8_edit" title="تعديل">
                                             <i class="las la-pen"></i>
                                         </a>
@@ -94,10 +93,14 @@
     </div>
     <!-- row closed -->
 @endsection
+
+
 @section('js')
-<!------------------------------------------AMA.Customer js------------------------------------------>
+
+
+<!--AMA.Stock js -->
 <script src={{ URL::asset("assets/js/scripts/stocks/scripts.js") }}></script>
-<!--_______________________________________AMA.Customer js__________________________________________-->
+
 
 <!--Internal  Datepicker js -->
 <script src="{{ URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js') }}"></script>

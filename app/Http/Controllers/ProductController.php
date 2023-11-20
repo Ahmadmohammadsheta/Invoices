@@ -67,7 +67,6 @@ class ProductController extends Controller
     public function show($id)
     {
         $data = $this->productRepository->find($id);
-        // dd(new ProductResource($data));
         return $this->sendResponse(new ProductResource($data), "", 200);
     }
 
@@ -98,7 +97,18 @@ class ProductController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Get the all resource from storage.
+     */
+    public function allProducts()
+    {
+        $data = $this->productRepository->all();
+        // dd(ProductResource::collection($data));
+        return $this->sendResponse(ProductResource::collection($data), "", 200);
+        return json_encode($data);
+    }
+
+    /**
+     * Get the specified resource from storage.
      */
     public function getProducts($id)
     {
@@ -107,7 +117,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Get the specified resource from storage.
      */
     public function getProduct($id)
     {

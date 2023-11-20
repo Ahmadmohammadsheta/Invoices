@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
+use App\Http\Traits\ResponseTrait as TraitResponseTrait;
+
 class UnitController extends Controller
 {
+    use TraitResponseTrait;
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->sendResponse(Unit::all(), "", 200);
     }
 
     /**

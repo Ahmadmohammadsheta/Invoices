@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Colors\ColorResource;
 use App\Models\Color;
 use Illuminate\Http\Request;
 use App\Repository\ColorRepositoryInterface;
@@ -22,6 +23,7 @@ class ColorController extends Controller
         public function index(Request $request)
         {
             $data = $this->colorRepository->all();
+            return $this->sendResponse(ColorResource::collection($data), "", 200);
 
             return $request->wantsJson() ?
             $this->sendResponse($data, "", 200) : view('colors.index', ['data' => $data]);

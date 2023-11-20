@@ -18,7 +18,7 @@
                             <th class="border-bottom-0">{{ __('تاريخ الفاتورة') }}</th>
                             <th class="border-bottom-0">{{ __('تاريخ الاستحقاق') }}</th>
                             <th class="border-bottom-0">{{ __('المنتج') }}</th>
-                            <th class="border-bottom-0">{{ __('القسم') }}</th>
+                            {{-- <th class="border-bottom-0">{{ __('القسم') }}</th> --}}
                             <th class="border-bottom-0">{{ __('الخصم') }}</th>
                             <th class="border-bottom-0">{{ __('الضريبة') }}</th>
                             <th class="border-bottom-0">{{ __('قيمة الضريبة') }}</th>
@@ -36,7 +36,7 @@
                             <td>{{ $item->invoice_date }}</td>
                             <td>{{ $item->due_date }}</td>
                             <td>{{ $item->product->name }}</td>
-                            <td>{{ $item->section->name  }}</td>
+                            {{-- <td>{{ $item->section->name  }}</td> --}}
                             <td>{{ $item->discount }}</td>
                             <td>{{ $item->value_vat }}</td>
                             <td>{{ $item->rate_vat }}</td>

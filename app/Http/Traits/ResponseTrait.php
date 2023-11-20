@@ -8,7 +8,7 @@ Trait ResponseTrait
      *
      * @return \Illuminate\Http\Response
      */
-    public function sendResponse($data, $message, $code = 200, $additional = [])
+    public function sendResponse($data, $message, $status, $additional = [])
     {
     	$response = [
             'success' => true,
@@ -16,8 +16,8 @@ Trait ResponseTrait
             'data'    => $data,
         ] + $additional;
 
-
-        return response()->json($response, $code);
+        $status = $status;
+        return response()->json($response, $status);
     }
 
     /**
@@ -25,12 +25,12 @@ Trait ResponseTrait
      *
      * @return \Illuminate\Http\Response
      */
-    public function paginateResponse($data, $collection, $message = "", $code = 200)
+    public function paginateResponse($data, $collection, $message = "", $status = 200)
     {
 
         $meta = $collection->toArray();
 
-        return $this->sendResponse($data, $message, $code, $meta);
+        return $this->sendResponse($data, $message, $status, $meta);
     }
 
     /**
@@ -38,7 +38,7 @@ Trait ResponseTrait
      *
      * @return \Illuminate\Http\Response
      */
-    public function sendError($error, $errorMessages = [], $code = 404)
+    public function sendError($error, $errorMessages = [], $status = 404)
     {
     	$response = [
             'success' => false,
@@ -51,7 +51,7 @@ Trait ResponseTrait
         }
 
 
-        return response()->json($response, $code);
+        return response()->json($response, $status);
     }
 
     /**

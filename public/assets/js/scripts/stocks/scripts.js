@@ -10,81 +10,127 @@ $(document).ready(function() {
     //--------------------------------------------------------------------
     //--------------------------------------------------------------------
     // Adding a stocks
-    $(".add_item_btn").click(function (e) {
-        e.preventDefault();
 
-        $("#show_item").append(`
-            <div class="row append_item">
+    $(document).on('show.bs.modal', '#modaldemo8_create', function(event) {
 
-                <div class="col-md-2 mb-3">
-                    <select id="product_id" name="product_id[]" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
-                        @foreach ($products as $product)
-                        <option  style="font-size: 1.2rem">{{ $product->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-1 mb-3">
-                    <input type="text" name="quantity[]" id="" class="form-control" placeholder="Quantity" required>
-                </div>
-
-                <div class="col-md-1 mb-3">
-                    <input type="text" name="price[]" id="" class="form-control" placeholder="Price" required>
-                </div>
-
-                <div class="col-md-2 mb-3">
-                    <input type="text" name="buying_price[]" id="" class="form-control" placeholder="Buying price" required>
-                </div>
-
-                <div class="col-md-1 mb-3">
-                    <input type="text" name="color_id[]" id="" class="form-control" placeholder="Color" required>
-                </div>
-
-                <div class="col-md-1 mb-3">
-                    <input type="text" name="size_id[]" id="" class="form-control" placeholder="Size" required>
-                </div>
-
-                <div class="col-md-2 mb-3">
-                    <input type="text" name="description[]" id="" class="form-control" placeholder="Description" required>
-                </div>
-
-                <div class="col-md-1 mb-3 d-grid">
-                    <button class="btn btn-danger remove_item_btn">X</button>
-                </div>
-            </div>
-        `);
-    });
-
-    $(document).on('click', '.remove_item_btn', function(e) {
-        e.preventDefault();
-        let row_item = $(this).parent().parent();
-        $(row_item).remove();
-    });
-
-
-    // product details when changed
-    // Adding a stocks
-    $("")
-
-    // Ajax request to insert multiple form data
-    $("#add_form").submit(function(e) {
-        e.preventDefault();
-        $("#add_btn").val('Adding......');
         $.ajax({
-            url: "/stocks",
-            type:"POST",
-            // method: 'post',
-            data: $(this).serialize(),
+            url: "/products/all_products",
+            type:"GET",
+            dataType: "json",
             success: function(response) {
-                $("#add_btn").val('Add');
-                $("#add_form")[0].reset();
-                $(".append_item").remove();
-                $(".table_div").load(location.href+ ' .table_div');
-                $("#show_alert").html(`
-                    <div class="alert alert-success role="alert">${ response }</div>
-                `);
-                $("#modaldemo8").modal('hide');
+                var select = $('#product_id');
+                $.each(response.data, function(index, product) {
+                    select.append($('<option>').val(product.id).text(product.name));
+                });
+            },
+            error: function(error) {
+
             }
+        });
+
+        $(document).on('change', '#product_id', function(e) {
+            // e.preventDefault();
+
+            var productId = $(this).val();
+            console.log(productId);
+            if (productId) {
+                // fill price input after product has selected
+                $.ajax({
+                    url: "products/" + productId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $('#price').empty();
+                        $('#price').val(data.data.price);
+                        console.log(data.data.price);
+                    },
+                });
+
+                // fill color input after product has selected
+                $.ajax({
+                    url: "{{ URL::to('colors') }}",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        $('#color_id').empty();
+                        // Get the select element.
+                        var select = $('#color_id');
+                        $.each(response.data, function(index, color) {
+                            select.append($('<option>').val(color.id).text(color.name));
+                        });
+                    },
+                });
+
+                // fill size input after product has selected
+                $.ajax({
+                    url: "{{ URL::to('sizes') }}",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(response) {// Get the select element.
+                        var select = $('#size_id');
+                        $.each(response.data, function(index, size) {
+                            select.append($('<option>').val(size.id).text(size.name));
+                        });
+                    },
+                });
+
+            } else {
+                console.log('AJAX load did not work');
+            }
+        });
+
+        $(document).on('click', '.add_item_btn', function(e) {
+            e.preventDefault();
+
+            $("#show_item").append(`
+                <div class="row append_item">
+
+                    <div class="col-md-2 mb-3">
+                        <select id="product_id" name="product_id[]" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
+                            <option  style="font-size: 1.2rem">اختر الصنف</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-1 mb-3">
+                        <input type="text" name="quantity[]" id="" class="form-control" placeholder="Quantity" required>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <input type="text" name="price[]" id="price" class="form-control" placeholder="Price" required>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <input type="text" name="buying_price[]" id="" class="form-control" placeholder="Buying price" required>
+                    </div>
+
+                    <div class="col-md-2 mb-3" id="color">
+                        <select id="color_id" name="color_id[]" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <select id="size_id" name="size_id[]" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-10 mb-3">
+                        <input type="text" name="description[]" id="" class="form-control" placeholder="Description" required>
+                    </div>
+
+                    <div class="col-md-1 mb-3 d-grid">
+                        <button class="btn btn-danger remove_item_btn"> X </button>
+                    </div>
+                </div>
+            `);
+        });
+
+        // remove before added rows
+        $(document).on('click', '.remove_item_btn', function(e) {
+            e.preventDefault();
+            let row_item = $(this).parent().parent();
+            $(row_item).remove();
         });
     });
     //____________________________________________________________________
@@ -103,51 +149,25 @@ $(document).ready(function() {
         $('#show_form_check_edit').empty()
 
         var button = $(event.relatedTarget)
-        var stocks = button.data('stocks')
-        var id = stocks.id
-        var name = stocks.name
-        var national_id = stocks.national_id
-        var phone1 = stocks.phone1
-        var email = stocks.email
-        var age = stocks.age
-        var type = stocks.type
-        var national_id_image = stocks.national_id_image
-        var approved = stocks.approved
-        var created_by = stocks.created_by
-        var updated_by = stocks.updated_by
-        var phone2 = stocks.phone2
-        var phone3 = stocks.phone3
+        var stock = button.data('stock')
+        var id = stock.id
+        var product_id = stock.product_id
+        var quantity = stock.quantity
+        var price = stock.price
+        var buying_price = stock.buying_price
+        var color_id = stock.color_id
+        var size_id = stock.size_id
+        var description = stock.description
         var modal = $(this)
-        modal.find('.modal-body #stocks').val(stocks);
+        modal.find('.modal-body #stock').val(stock);
         modal.find('.modal-body #id').val(id);
-        modal.find('.modal-body #name').val(name);
-        modal.find('.modal-body #national_id').val(national_id);
-        modal.find('.modal-body #email').val(email);
-        modal.find('.modal-body #phone1').val(phone1);
-        modal.find('.modal-body #age').val(age);
-        modal.find('.modal-body #type').val((type == 1) ? 'تاجر' : ((type == 2) ? 'عميل' : ((type == 3) ? 'مزدوج' : 'غير محدد')));
-        modal.find('.modal-body #national_id_image').val(national_id_image);
-        modal.find('.modal-body #approved').val(approved == 0 ? 'فعال' : 'غير فعال');
-        modal.find('.modal-body #phone2').val(phone2);
-        modal.find('.modal-body #phone3').val(phone3);
-        modal.find('.modal-body #updated_by').val(updated_by);
-        modal.find('.modal-body #created_by').val(created_by);
-        $(".show_edit_type").append(`
-            <option value="1" ${(type == 1 ? "selected" : "")} style="font-size: 1.3rem"> مورد </option>
-            <option value="2" ${(type == 2 ? "selected" : "")} style="font-size: 1.3rem">عميل </option>
-            <option value="3" ${(type == 3 ? "selected" : "")} style="font-size: 1.3rem"> مزدوج </option>
-        `);
-
-        $('#show_form_check_edit').append(`
-            <div class="form-check">
-                <input class="form-check-input" value="0" type="radio" name="approved" id="approved" ${(approved == 0 ? "checked" : "")} >
-                <label class="form-check-label mr-4" for="approved" style="font-size= 1.3rem">فعال</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" value="1" type="radio" name="approved" id="approved"  ${(approved == 1 ? "checked" : "")} >
-                <label class="form-check-label mr-4" for="approved" style="font-size= 1.3rem">غير فعال</label>
-            </div>
-        `)
+        modal.find('.modal-body #product_id').val(product_id);
+        modal.find('.modal-body #quantity').val(quantity);
+        modal.find('.modal-body #price').val(price);
+        modal.find('.modal-body #buying_price').val(buying_price);
+        modal.find('.modal-body #color_id').val(color_id);
+        modal.find('.modal-body #size_id').val(size_id);
+        modal.find('.modal-body #description').val(description);
     });
 
     // Ajax request to edit cutomer form show modal
@@ -155,9 +175,9 @@ $(document).ready(function() {
         e.preventDefault();
 
         var id = $("#id").val();
-        console.log(id);
+
         $("#show_btn_edit").val('Updating......');
-        console.log(id);
+
         $.ajax({
             url: "/stocks/updating/"+ id,
             type:"PUT",
@@ -199,52 +219,46 @@ $(document).ready(function() {
         $('#form_check_edit').empty()
 
         var button = $(event.relatedTarget)
-        var stocks = button.data('stocks')
-        var id = stocks.id
-        var name = stocks.name
-        var national_id = stocks.national_id
-        var phone1 = stocks.phone1
-        var email = stocks.email
-        var age = stocks.age
-        var type = stocks.type
-        var national_id_image = stocks.national_id_image
-        var approved = stocks.approved
-        var created_by = stocks.created_by
-        var updated_by = stocks.updated_by
-        var phone2 = stocks.phone2
-        var phone3 = stocks.phone3
+        var stock = button.data('stock')
+        var id = stock.id
+        var product_id = stock.product_id
+        var quantity = stock.quantity
+        var price = stock.price
+        var buying_price = stock.buying_price
+        var color_id = stock.color_id
+        var size_id = stock.size_id
+        var description = stock.description
         var modal = $(this)
-        modal.find('.modal-body #stocks').val(stocks);
+        modal.find('.modal-body #stock').val(stock);
         modal.find('.modal-body #id').val(id);
-        modal.find('.modal-body #name').val(name);
-        modal.find('.modal-body #national_id').val(national_id);
-        modal.find('.modal-body #email').val(email);
-        modal.find('.modal-body #phone1').val(phone1);
-        modal.find('.modal-body #age').val(age);
-        modal.find('.modal-body #type').val(type);
-        modal.find('.modal-body #national_id_image').val(national_id_image);
-        modal.find('.modal-body #approved').val(approved);
-        modal.find('.modal-body #phone2').val(phone2);
-        modal.find('.modal-body #phone3').val(phone3);
-        modal.find('.modal-body #updated_by').val(updated_by);
-        modal.find('.modal-body #created_by').val(created_by);
-        console.log(type, email, stocks, national_id_image);
-        $(".edit_type").append(`
-            <option value="1" ${(type == 1 ? "selected" : "")} style="font-size: 1..2rem"> مورد </option>
-            <option value="2" ${(type == 2 ? "selected" : "")} style="font-size: 1.2rem">عميل </option>
-            <option value="3" ${(type == 3 ? "selected" : "")} style="font-size: 1.2rem"> مزدوج </option>
-        `);
+        modal.find('.modal-body #product_id').val(product_id);
+        modal.find('.modal-body #quantity').val(quantity);
+        modal.find('.modal-body #price').val(price);
+        modal.find('.modal-body #buying_price').val(buying_price);
+        // modal.find('.modal-body #color_id').val(color_id);
+        // modal.find('.modal-body #size_id').val(size_id);
+        modal.find('.modal-body #description').val(description);
+        // fill color input after product has selected
+        $.ajax({
+            url: "{{ URL::to('colors') }}",
+            type: "GET",
+            dataType: "json",
+            success: function(response) {
+                $('#color_id').empty();
+                // Get the select element.
 
-        $('#form_check_edit').append(`
-            <div class="form-check">
-                <input class="form-check-input" value="0" type="radio" name="approved" id="approved" ${(approved == 0 ? "checked" : "")} >
-                <label class="form-check-label mr-4" for="approved" style="font-size= 1.3rem">فعال</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" value="1" type="radio" name="approved" id="approved"  ${(approved == 1 ? "checked" : "")} >
-                <label class="form-check-label mr-4" for="approved" style="font-size= 1.3rem">غير فعال</label>
-            </div>
-        `)
+                $.each(response.data, function(index, color) {
+                    $("#color_id").append(`
+                        <option value="1" ${(color_id == color.id ? "selected" : "")} style="font-size: 1..2rem"> ${color.name} </option>
+                    `);
+                    // select.append($('<option>').val(color.id).text(color.name));
+                });
+            },
+            error: function() {
+
+            alert('d');
+            }
+        });
 
         // Ajax request to insert cutomer form data
         $("#edit_form").submit(function(e) {
@@ -331,6 +345,5 @@ $(document).ready(function() {
 //____________________________________________________________________
 //____________________________________________________________________
 //____________________________________________________________________
-
 });
 

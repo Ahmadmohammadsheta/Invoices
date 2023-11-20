@@ -42,11 +42,12 @@
                 <div class="card-body">
                     <form action="{{ route('invoices.store') }}" method="post" enctype="multipart/form-data"
                         autocomplete="off">
-                        {{ csrf_field() }}
+                        @csrf
                         {{-- 1 --}}
 
                         <div class="row">
                             <div class="col">
+                                <input type="hidden" name="invoice_type" value="2">
                                 <label for="inputName" class="control-label">{{ __('اسم العميل') }}</label>
                                 <select id="customer_id" name="customer_id" class="form-control SlectBox" >
                                     <!--placeholder-->
@@ -104,8 +105,8 @@
                             </div>
 
                             <div class="col">
-                                <label for="inputName" class="control-label">{{ __('مبلغ التحصيل') }}</label>
-                                <input type="text" class="form-control" id="inputName" name="amount_collection"
+                                <label for="amount_collection" class="control-label">{{ __('مبلغ التحصيل') }}</label>
+                                <input type="text" class="form-control" name="amount_collection" id="amount_collection"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                             </div>
                         </div>

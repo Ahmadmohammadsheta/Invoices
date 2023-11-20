@@ -6,6 +6,7 @@ use App\Models\Stock;
 use Illuminate\Http\Request;
 use App\Repository\StockRepositoryInterface;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
+use App\Services\ProductService;
 
 class StockController extends Controller
 {
@@ -30,9 +31,10 @@ class StockController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(ProductService $productService)
     {
-        return view('stocks.create');
+        $products = $productService->allProducts();
+        return view('stocks.create', compact('products'));
     }
 
     /**

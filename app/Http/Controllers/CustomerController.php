@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest;
+use App\Http\Resources\Customers\CustomerResource;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Repository\CustomerRepositoryInterface;
@@ -26,7 +27,7 @@ class CustomerController extends Controller
         $data = $this->customerRepository->forAllConditionsFinally($attributes);
 
         return $request->wantsJson() ?
-        $this->sendResponse($data, "", 200) : view('customers.index', ['data' => $data]);
+        $this->sendResponse(CustomerResource::collection($data), "", 200) : view('customers.index', ['data' => $data]);
     }
 
     /**
@@ -40,7 +41,7 @@ class CustomerController extends Controller
 
         $data = $this->customerRepository->forAllConditionsFinally($attributes);
         return $request->wantsJson() ?
-        $this->sendResponse($data, "", 200) : view('customers.index', ['data' => $data]);
+        $this->sendResponse(CustomerResource::collection($data), "", 200) : view('customers.index', ['data' => $data]);
     }
 
     /**
@@ -55,7 +56,7 @@ class CustomerController extends Controller
         $data = $this->customerRepository->forAllConditionsFinally($attributes);
 
         return $request->wantsJson() ?
-        $this->sendResponse($data, "", 200) : view('customers.index', ['data' => $data]);
+        $this->sendResponse(CustomerResource::collection($data), "", 200) : view('customers.index', ['data' => $data]);
     }
 
     /**
@@ -69,7 +70,7 @@ class CustomerController extends Controller
 
         $data = $this->customerRepository->forAllConditionsFinally($attributes);
         return $request->wantsJson() ?
-        $this->sendResponse($data, "", 200) : view('customers.index', ['data' => $data]);
+        $this->sendResponse(CustomerResource::collection($data), "", 200) : view('customers.index', ['data' => $data]);
     }
 
     /**
@@ -90,7 +91,7 @@ class CustomerController extends Controller
     public function show(Customer $customer, Request $request)
     {
         return $request->wantsJson() ?
-        $this->sendResponse($customer, "", 200) : view('customers.show', ['data' => $customer]);
+        $this->sendResponse(new CustomerResource($customer), "", 200) : view('customers.show', ['data' => $customer]);
     }
 
     /**

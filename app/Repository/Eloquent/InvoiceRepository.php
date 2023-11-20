@@ -34,6 +34,7 @@ class InvoiceRepository extends BaseRepository implements InvoiceRepositoryInter
     */
     public function createInvoice(array $attributes): Invoice
     {
+        $attributes['created_by'] = auth()->id();
         // Create the invoice object
         $invoice = $this->model->create($attributes);
 
@@ -115,7 +116,7 @@ class InvoiceRepository extends BaseRepository implements InvoiceRepositoryInter
         //     ], 200);
         // });
 
-        
+
         // $project  = Project::onlyTrashed()->findOrFail($id) ;
         // if (!count($project->levels)) {
         //     $this->deleteImages($project->projectImages()->pluck('img')->toArray(), 'projects');

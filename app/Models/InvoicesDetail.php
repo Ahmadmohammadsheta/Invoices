@@ -19,7 +19,7 @@ class InvoicesDetail extends Model
         'value_status',
         'payment_date',
         'note',
-        'user',
+        'created_by',
         ];
 
     /**

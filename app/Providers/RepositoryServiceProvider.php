@@ -5,11 +5,15 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Repository\Eloquent\BaseRepository;
 use App\Repository\Eloquent\ItemRepository;
+use App\Repository\Eloquent\SizeRepository;
 use App\Repository\Eloquent\UnitRepository;
 use App\Repository\ItemRepositoryInterface;
+use App\Repository\SizeRepositoryInterface;
 use App\Repository\UnitRepositoryInterface;
 use App\Repository\BrandRepositoryInterface;
+use App\Repository\ColorRepositoryInterface;
 use App\Repository\Eloquent\BrandRepository;
+use App\Repository\Eloquent\ColorRepository;
 use App\Repository\Eloquent\StockRepository;
 use App\Repository\StockRepositoryInterface;
 use App\Repository\Eloquent\InvoiceRepository;
@@ -27,8 +31,6 @@ use App\Repository\Eloquent\SubProductRepository;
 use App\Repository\SubProductRepositoryInterface;
 use App\Repository\AdvertisementRepositoryInterface;
 use App\Repository\Eloquent\AdvertisementRepository;
-
-
 
 /**
 * Class RepositoryServiceProvider
@@ -55,6 +57,8 @@ class RepositoryServiceProvider extends ServiceProvider
        $this->app->bind(SubProductRepositoryInterface::class, SubProductRepository::class);
        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
        $this->app->bind(CustomerRepositoryInterface::class, CustomerRepository::class);
+       $this->app->bind(ColorRepositoryInterface::class, ColorRepository::class);
+       $this->app->bind(SizeRepositoryInterface::class, SizeRepository::class);
     }
 
     /**

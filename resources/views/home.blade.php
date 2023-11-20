@@ -40,6 +40,7 @@
 @endsection
 @section('content')
 				<!-- row -->
+                @if (count($invoices) > 0)
 				<div class="row row-sm">
 					<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
 						<div class="card overflow-hidden sales-card bg-primary-gradient">
@@ -116,7 +117,7 @@
 								<div class="pb-0 mt-0">
 									<div class="d-flex">
 										<div class="">
-											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{ __('$') . number_format($productToday->sum('price'), 2) }}</h4>
+											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{ __('$') . number_format($productToday->sum('buying_price'), 2) }}</h4>
 											<p class="mb-0 tx-12 text-white op-7">{{ number_format($productToday->count(), 2) }}</p>
 										</div>
 										<span class="float-right my-auto mr-auto">
@@ -130,6 +131,7 @@
 						</div>
 					</div>
 				</div>
+                @endif
 				<!-- row closed -->
 
 				<!-- row opened -->

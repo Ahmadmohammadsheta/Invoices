@@ -63,11 +63,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ahmed Sheta',
             'email' => 'ahmed@example.com',
             'password' => Hash::make('12345678'),
+            'created_by' => 1,
         ])->assignRole([$role->id]);
 
-        Unit::create([
-            'name' => 'وحدة',
-        ]);
+        Unit::create(['name' => 'unit']);
         // Create admin User and assign the role to him.
         /**
          * Spatie package

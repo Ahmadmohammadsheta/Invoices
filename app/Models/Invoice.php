@@ -16,7 +16,7 @@ class Invoice extends Model
         'invoice_number',
         'invoice_date',
         'due_date',
-        'section_id',
+        'invoice_type',
         'product_id',
         'amount_collection',
         'amount_commission',
@@ -28,6 +28,7 @@ class Invoice extends Model
         'value_status',
         'note',
         'payment_Date',
+        'created_by',
         ];
 
     /**

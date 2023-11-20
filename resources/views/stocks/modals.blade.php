@@ -3,7 +3,7 @@
 <!----------------------------------- Create modal ----------------------------------->
 <!----------------------------------- Create modal ----------------------------------->
 <!-- Basic modal -->
-<div class="modal" id="modaldemo8">
+<div class="modal" id="modaldemo8_create">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content modal-content-demo">
             <div class="modal-header">
@@ -17,34 +17,49 @@
                             <div class="row">
 
                                 <div class="col-md-2 mb-3">
-                                    <input type="text" name="product_id[]" id="" class="form-control" placeholder="Product" required>
+                                    <label for="product_id" class="form-label text-warning">{{ __('Products') }}</label>
+                                    <select id="product_id" name="product_id[]" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
+                                        <option value=""  style="font-size: 1.2rem" class="text-dark">{{ __('اختر الصنف') }}</option>
+                                    </select>
+                                    {{-- <input type="text" name="product_id[]" id="" class="form-control" placeholder="Product" required> --}}
                                 </div>
 
                                 <div class="col-md-1 mb-3">
+                                    <label for="quantity" class="form-label text-warning">{{ __('Quantity') }}</label>
                                     <input type="text" name="quantity[]" id="" class="form-control" placeholder="Quantity" required>
                                 </div>
 
-                                <div class="col-md-1 mb-3">
-                                    <input type="text" name="price[]" id="" class="form-control" placeholder="Price" required>
+                                <div class="col-md-2 mb-3">
+                                    <label for="price" class="form-label text-warning">{{ __('Price') }}</label>
+                                    <input type="text" name="price[]" id="price" class="form-control" placeholder="Price" required>
                                 </div>
 
                                 <div class="col-md-2 mb-3">
+                                    <label for="buying_price" class="form-label text-warning">{{ __('Buying price') }}</label>
                                     <input type="text" name="buying_price[]" id="" class="form-control" placeholder="Buying price" required>
                                 </div>
 
-                                <div class="col-md-1 mb-3">
-                                    <input type="text" name="color_id[]" id="" class="form-control" placeholder="Color" required>
-                                </div>
+                                <div class="col-md-2 mb-3" id="color">
+                                    <label for="color_id" class="form-label text-warning">{{ __('Color') }}</label>
+                                    <select id="color_id" name="color_id[]" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
 
-                                <div class="col-md-1 mb-3">
-                                    <input type="text" name="size_id[]" id="" class="form-control" placeholder="Size" required>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-2 mb-3">
+                                    <label for="size_id" class="form-label text-warning">{{ __('Size') }}</label>
+                                    <select id="size_id" name="size_id[]" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-10 mb-3">
+                                    <label for="description" class="form-label text-warning">{{ __('Description') }}</label>
                                     <input type="text" name="description[]" id="" class="form-control" placeholder="Description" required>
                                 </div>
 
                                 <div class="col-md-1 mb-3 d-grid">
+                                    <label for="" class="form-label text-warning">{{ __('Add row') }}</label>
                                     <button class="btn btn-success add_item_btn">{{ __('+') }}</button>
                                 </div>
 
@@ -101,35 +116,40 @@
                                                         <div class="row" id="main_tab">
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="name" class="form-label text-warning">{{ __('Name') }}</label>
+                                                                <label for="product_id" class="form-label text-warning text-center">{{ __('Product') }}</label>
                                                                 <input type="hidden" name="id" id="id" value="" class="form-control text-center text-primary">
-                                                                <input type="text" name="name" id="name" value="" class="form-control text-center text-primary" style="font-size: 1.2rem" readonly>
+                                                                <input type="text" name="product_id" id="product_id" value="" class="form-control text-center text-primary" style="font-size: 1.2rem" readonly>
                                                             </div>
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="national_id" class="form-label text-warning">{{ __('National_Id') }}</label>
-                                                                <input type="text" name="national_id" id="national_id" value="" class="form-control text-center text-primary" style="font-size: 1.2rem" readonly>
+                                                                <label for="quantity" class="form-label text-warning text-center">{{ __('Quantity') }}</label>
+                                                                <input type="text" name="quantity" id="quantity" value="" class="form-control text-center text-primary" style="font-size: 1.2rem" readonly>
                                                             </div>
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="age" class="form-label text-warning">{{ __('Age') }}</label>
-                                                                <input name="age" id="age" type="date" class="form-control text-center text-primary fc-datepicker" style="font-size: 1.2rem" placeholder="YYYY-MM-DD"
+                                                                <label for="price" class="form-label text-warning text-center">{{ __('Price') }}</label>
+                                                                <input name="price" id="price" type="date" class="form-control text-center text-primary fc-datepicker" style="font-size: 1.2rem" placeholder="YYYY-MM-DD"
                                                                     type="text" value="" readonly>
                                                             </div>
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="phone1" class="form-label text-warning">{{ __('Phone1') }}</label>
-                                                                <input type="text" name="phone1" id="phone1" value="" class="form-control text-center text-primary" style="font-size: 1.2rem" readonly>
+                                                                <label for="buying_price" class="form-label text-warning text-center">{{ __('Buying_price') }}</label>
+                                                                <input type="text" name="buying_price" id="buying_price" value="" class="form-control text-center text-primary" style="font-size: 1.2rem" readonly>
                                                             </div>
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="email" class="form-label text-warning">{{ __('Email') }}</label>
-                                                                <input type="email" name="email" id="email" value="" class="form-control text-center text-primary" style="font-size: 1.2rem" readonly>
+                                                                <label for="color_id" class="form-label text-warning text-center">{{ __('Color') }}</label>
+                                                                <input type="text" name="color_id" id="color_id" value="" class="form-control text-center text-primary" style="font-size: 1.2rem" readonly>
                                                             </div>
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="type" class="form-label text-warning">{{ __('Type') }}</label>
-                                                                <input type="text" name="type" id="type" value="" class="form-control text-center text-primary" style="font-size: 1.2rem" readonly>
+                                                                <label for="size_id" class="form-label text-warning text-center">{{ __('Size') }}</label>
+                                                                <input type="text" name="size_id" id="size_id" value="" class="form-control text-center text-primary" style="font-size: 1.2rem" readonly>
+                                                            </div>
+
+                                                            <div class="col-md-4 mb-3">
+                                                                <label for="description" class="form-label text-warning text-center">{{ __('Description') }}</label>
+                                                                <input type="text" name="description" id="description" value="" class="form-control text-center text-primary" style="font-size: 1.2rem" readonly>
                                                             </div>
 
                                                         </div>
@@ -141,32 +161,32 @@
                                                         <div class="row" id="additional_tab">
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="approved" class="form-label text-warning">{{ __('Approved') }}</label>
+                                                                <label for="approved" class="form-label text-warning text-center">{{ __('Approved') }}</label>
                                                                 <input type="text" name="approved" id="approved" value="" class="form-control text-center text-info" style="font-size: 1.2rem" placeholder="approved" readonly>
                                                             </div>
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="phone2" class="form-label text-warning">{{ __('Phone2') }}</label>
+                                                                <label for="phone2" class="form-label text-warning text-center">{{ __('Phone2') }}</label>
                                                                 <input type="text" name="phone2" id="phone2" value="" class="form-control text-center text-info" style="font-size: 1.2rem" placeholder="phone 2" readonly>
                                                             </div>
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="phone3" class="form-label text-warning">{{ __('Phone3') }}</label>
+                                                                <label for="phone3" class="form-label text-warning text-center">{{ __('Phone3') }}</label>
                                                                 <input type="text" name="phone3" id="phone3" value="" class="form-control text-center text-info" style="font-size: 1.2rem" placeholder="phone 3" readonly>
                                                             </div>
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="national_id_image" class="form-label text-warning">{{ __('National Id Image') }}</label>
+                                                                <label for="national_id_image" class="form-label text-warning text-center">{{ __('National Id Image') }}</label>
                                                                 <input type="text" name="national_id_image" id="national_id_image" value="" class="form-control text-center text-info" style="font-size: 1.2rem" placeholder="National id image" readonly>
                                                             </div>
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="created_by" class="form-label text-warning">{{ __('Created By') }}</label>
+                                                                <label for="created_by" class="form-label text-warning text-center">{{ __('Created By') }}</label>
                                                                 <input type="text" name="created_by" id="created_by" value="" class="form-control text-center text-info" style="font-size: 1.2rem" placeholder="User create" readonly>
                                                             </div>
 
                                                             <div class="col-md-4 mb-3">
-                                                                <label for="updated_by" class="form-label text-warning">{{ __('Updated By') }}</label>
+                                                                <label for="updated_by" class="form-label text-warning text-center">{{ __('Updated By') }}</label>
                                                                 <input type="text" name="updated_by" id="updated_by" value="" class="form-control text-center text-info" style="font-size: 1.2rem" placeholder="User update" readonly>
                                                             </div>
 
@@ -188,64 +208,43 @@
                                                                 <div id="show_item">
                                                                     <div class="row" id="">
 
-                                                                        <div class="col-md-4 mb-3">
-                                                                            <label for="name" class="form-label text-warning">{{ __('Name') }}</label>
-                                                                            <input type="hidden" name="id" id="id" value="" class="form-control text-center text-danger">
-                                                                            <input type="text" name="name" id="name" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="Product" required>
+                                                                        <div class="col-md-2 mb-3">
+                                                                            <label for="name" class="form-label text-warning text-center">{{ __('Product') }}</label>
+                                                                            <input type="text" name="product_id" value="" id="product_id" class="form-control" required>
                                                                         </div>
 
-                                                                        <div class="col-md-4 mb-3">
-                                                                            <label for="national_id" class="form-label text-warning">{{ __('National_Id') }}</label>
-                                                                            <input type="text" name="national_id" id="national_id" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="National id" required>
+                                                                        <div class="col-md-2 mb-3">
+                                                                            <label for="name" class="form-label text-warning text-center">{{ __('Quantity') }}</label>
+                                                                            <input type="text" name="quantity" value="" id="quantity" class="form-control" required>
                                                                         </div>
 
-                                                                        <div class="col-md-4 mb-3">
-                                                                            <label for="age" class="form-label text-warning">{{ __('Age') }}</label>
-                                                                            <input name="age" id="age" type="date" class="form-control text-center text-danger fc-datepicker" style="font-size: 1.2rem" placeholder="YYYY-MM-DD"
-                                                                                type="text" value="" required>
+                                                                        <div class="col-md-2 mb-3">
+                                                                            <label for="name" class="form-label text-warning text-center">{{ __('Price') }}</label>
+                                                                            <input type="text" name="price" value="" id="price" class="form-control" required>
                                                                         </div>
 
-                                                                        <div class="col-md-4 mb-3 p-3" id="show_form_check_edit">
+                                                                        <div class="col-md-2 mb-3">
+                                                                            <label for="name" class="form-label text-warning text-center">{{ __('Buying Price') }}</label>
+                                                                            <input type="text" name="buying_price" value="" id="buying_price" class="form-control" required>
                                                                         </div>
 
-                                                                        <div class="col-md-4 mb-3">
-                                                                            <label for="email" class="form-label text-warning">{{ __('Email') }}</label>
-                                                                            <input type="email" name="email" id="email" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="Email">
-                                                                        </div>
+                                                                        <div class="col-md-2 mb-3">
+                                                                            <label for="color_id" class="form-label text-warning text-center">{{ __('Color') }}</label>
+                                                                            <select id="color_id" name="color_id" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
 
-                                                                        <div class="col-md-4 mb-2">
-                                                                            <label for="type" class="form-label text-warning">{{ __('Type') }}</label>
-                                                                            <select id="type" name="type" class="form-control text-center text-danger SlectBox show_edit_type" style="font-size: 1.2rem" aria-label="Default select example">
-                                                                                <option  style="font-size: 1.2rem">{{ __('النوع') }}</option>
                                                                             </select>
                                                                         </div>
 
-                                                                        <div class="col-md-4 mb-3">
-                                                                            <label for="phone1" class="form-label text-warning">{{ __('Phone1') }}</label>
-                                                                            <input type="text" name="phone1" id="phone1" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="Phone1" required>
+                                                                        <div class="col-md-2 mb-3">
+                                                                            <label for="size_id" class="form-label text-warning text-center">{{ __('Size') }}</label>
+                                                                            <select id="size_id" name="size_id" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
+
+                                                                            </select>
                                                                         </div>
 
-                                                                        <div class="col-md-4 mb-3">
-                                                                            <label for="phone2" class="form-label text-warning">{{ __('Phone2') }}</label>
-                                                                            <input type="text" name="phone2" id="phone2" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="phone 2">
-                                                                        </div>
-
-                                                                        <div class="col-md-4 mb-3">
-                                                                            <label for="phone3" class="form-label text-warning">{{ __('Phone3') }}</label>
-                                                                            <input type="text" name="phone3" id="phone3" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="phone 3">
-                                                                        </div>
-
-                                                                        <div class="col-md-4 mb-3">
-                                                                            <label for="national_id_image" class="form-label text-warning">{{ __('National Id Image') }}</label>
-
-                                                                            <p class="text-danger">{{ __('* صيغة المرفق pdf, jpeg ,.jpg , png ') }}</p>
-                                                                            <h5 class="card-title">{{ __('المرفقات') }}</h5>
-
-                                                                            <div class="col-md-4 mb-3">
-                                                                                <input type="file" name="national_id_image" id="national_id_image" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
-                                                                                    data-height="70" />
-                                                                            </div><br>
-
+                                                                        <div class="col-md-12 mb-3">
+                                                                            <label for="name" class="form-label text-warning text-center">{{ __('Description') }}</label>
+                                                                            <input type="text" name="description" value="" id="description" class="form-control" required>
                                                                         </div>
 
                                                                     </div>
@@ -303,64 +302,43 @@
                     <div id="show_item">
                         <div class="row" id="">
 
-                            <div class="col-md-4 mb-3">
-                                <label for="name" class="form-label text-warning">{{ __('Name') }}</label>
-                                <input type="hidden" name="id" id="id" value="" class="form-control text-center text-danger">
-                                <input type="text" name="name" id="name" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="Product" required>
+                            <div class="col-md-2 mb-3">
+                                <label for="name" class="form-label text-warning text-center">{{ __('Product') }}</label>
+                                <input type="text" name="product_id" value="" id="product_id" class="form-control" required>
                             </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label for="national_id" class="form-label text-warning">{{ __('National_Id') }}</label>
-                                <input type="text" name="national_id" id="national_id" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="National id" required>
+                            <div class="col-md-2 mb-3">
+                                <label for="name" class="form-label text-warning text-center">{{ __('Quantity') }}</label>
+                                <input type="text" name="quantity" value="" id="quantity" class="form-control" required>
                             </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label for="age" class="form-label text-warning">{{ __('Age') }}</label>
-                                <input name="age" id="age" type="date" class="form-control text-center text-danger fc-datepicker" style="font-size: 1.2rem" placeholder="YYYY-MM-DD"
-                                    type="text" value="" required>
+                            <div class="col-md-2 mb-3">
+                                <label for="name" class="form-label text-warning text-center">{{ __('Price') }}</label>
+                                <input type="text" name="price" value="" id="price" class="form-control" required>
                             </div>
 
-                            <div class="col-md-4 mb-3 p-3" id="show_form_check_edit">
+                            <div class="col-md-2 mb-3">
+                                <label for="name" class="form-label text-warning text-center">{{ __('Buying Price') }}</label>
+                                <input type="text" name="buying_price" value="" id="buying_price" class="form-control" required>
                             </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label for="email" class="form-label text-warning">{{ __('Email') }}</label>
-                                <input type="email" name="email" id="email" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="Email">
-                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="color_id" class="form-label text-warning text-center">{{ __('Color') }}</label>
+                                <select id="color_id" name="color_id" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
 
-                            <div class="col-md-4 mb-2">
-                                <label for="type" class="form-label text-warning">{{ __('Type') }}</label>
-                                <select id="type" name="type" class="form-control text-center text-danger SlectBox edit_type" style="font-size: 1.2rem" aria-label="Default select example">
-                                    <option  style="font-size: 1.2rem">{{ __('النوع') }}</option>
                                 </select>
                             </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label for="phone1" class="form-label text-warning">{{ __('Phone1') }}</label>
-                                <input type="text" name="phone1" id="phone1" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="Phone1" required>
+                            <div class="col-md-2 mb-3">
+                                <label for="size_id" class="form-label text-warning text-center">{{ __('Size') }}</label>
+                                <select id="size_id" name="size_id" class="form-control text-center text-danger SlectBox" style="font-size: 1.2rem" aria-label="Default select example">
+
+                                </select>
                             </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label for="phone2" class="form-label text-warning">{{ __('Phone2') }}</label>
-                                <input type="text" name="phone2" id="phone2" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="phone 2">
-                            </div>
-
-                            <div class="col-md-4 mb-3">
-                                <label for="phone3" class="form-label text-warning">{{ __('Phone3') }}</label>
-                                <input type="text" name="phone3" id="phone3" value="" class="form-control text-center text-danger" style="font-size: 1.2rem" placeholder="phone 3">
-                            </div>
-
-                            <div class="col-md-4 mb-3">
-                                <label for="national_id_image" class="form-label text-warning">{{ __('National Id Image') }}</label>
-
-                                <p class="text-danger">{{ __('* صيغة المرفق pdf, jpeg ,.jpg , png ') }}</p>
-                                <h5 class="card-title">{{ __('المرفقات') }}</h5>
-
-                                <div class="col-md-4 mb-3">
-                                    <input type="file" name="national_id_image" id="national_id_image" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
-                                        data-height="70" />
-                                </div><br>
-
+                            <div class="col-md-12 mb-3">
+                                <label for="name" class="form-label text-warning text-center">{{ __('Description') }}</label>
+                                <input type="text" name="description" value="" id="description" class="form-control" required>
                             </div>
 
                         </div>
